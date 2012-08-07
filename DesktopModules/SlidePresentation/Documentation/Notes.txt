@@ -30,170 +30,97 @@ Slide Presentation controller
 		public class SlidePresentationController:DnnController  
 		{
 			[DnnAuthorize(AllowAnonymous = true)]
-			public ActionResult GetSlides(int tabId, int moduleId)
-			{
-				try
-				{
-					var slides = Components.Slide.GetSlides(tabId,moduleId);
-					return Json(slides, JsonRequestBehavior.AllowGet);
-				}
-				catch (Exception exc)
-				{
-					DnnLog.Error(exc);
-					return Json(null, JsonRequestBehavior.AllowGet);
-				}
-			}
+        public ActionResult GetSlides(int tabId, int moduleId)
+        {
+            try
+            {
+                var slides = Components.Slide.GetSlides(tabId, moduleId);
+                return Json(slides, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception exc)
+            {
+                DnnLog.Error(exc);
+                return Json(null, JsonRequestBehavior.AllowGet);
+            }
+        }
 		}
 	}
 
 
-
-SlideViewModel.cs
-
-		using System;
-
-		namespace Christoc.Com.Modules.SlidePresentation.ViewModels
-		{
-			public class SlideViewModel
-			{
-				public int SlideId { get; set; }
-				public string Body { get; set; }
-				public string CreatedByUser { get; set; }
-				public int CreatedByUserId { get; set; }
-				public string LastModifiedByUser { get; set; }
-				public int LastModifiedByUserId { get; set; }
-				public new DateTime CreatedOnDate { get; set; }
-				public new DateTime LastModifiedOnDate { get; set; }
-				public int ModuleId { get; set; }
-				public int TabId { get; set; }
-				public int PortalId { get; set; }
-
-			}
-		}
-
-SlideViewModels.cs
-
-		using System.Collections.Generic;
-
-		namespace Christoc.Com.Modules.SlidePresentation.ViewModels
-		{
-			public class SlideViewModels
-			{
-				public IList<SlideViewModel> Slides { get; set; }
-
-			}
-		}
-
-
 View.ascx
 
-<div id="simple">
-<!-- ko foreach: slides -->
-<div class="step">
-<div data-bind="html:Body">
+<div id="SlidePresentation">
+    <!-- ko foreach: slides -->
+    <div class="step" data-bind="attr:{'data-x':XVal,'data-y':YVal}">
+        <div data-bind="html:Body">
+        </div>
+    </div>
+    <!-- /ko -->
 </div>
-</div>
-<!-- /ko -->
-</div>
 
-<script type="text/javascript">
-function Slide(s) {
-this.SlideId = s.SlideId;
-this.Body = s.Body;
-}
 
-var viewModel = {
-slides: ko.observableArray([])
-};
-
-$(function () {
-var sf = $.ServicesFramework(<%=ModuleId%>);
-sf.getAntiForgeryProperty();
-var data = {};
-data.moduleId = <%=ModuleId%>;
-data.tabId = <%=TabId%>;
-data.sortAsc = true;
-$.ajax({
-type: "POST",
-cache: false,
-url: '/desktopmodules/SlidePresentation/API/SlidePresentation.ashx/GetSlides',
-data: data
-}).done(function (data) {
-viewModel.slides = ko.utils.arrayMap(data, function (slide) {
-return new Slide(slide);
-});
-ko.applyBindings(viewModel);
-}).fail(function () {
-Console.Log('Sorry failed to load Slides');
-});
-});
-
-// delay 
-function checkModel() {
-if (viewModel.slides.length > 0) {
-$('#simple').jmpress();
-}
-else {
-checkModel();
-}
-}
-setTimeout("checkModel()", 500);
+<script language="javascript" type="text/javascript">
+    jQuery(document).ready(function ($) {
+        var md = new SlidePresentation($, ko, {
+            moduleId:<% = ModuleId %>,
+            tabId: <% = TabId %>,
+            serverErrorText: '<%=DotNetNuke.UI.Utilities.ClientAPI.GetSafeJSString(LocalizeString("ServerError"))%>',
+            servicesFramework: $.ServicesFramework(<%=ModuleContext.ModuleId %>)   
+        });
+        md.init('#SlidePresentation');
+    });
 </script>
 
 
+View.ASCX.cs
+
+	ClientResourceManager.RegisterScript(Parent.Page, "/desktopmodules/SlidePresentation/Scripts/SlidePresentation.js");
+
+SlidePresentation.JS
+
+function SlidePresentation($, ko, settings) {
+    var moduleId = settings.moduleId;
+    var tabId = settings.tabId;
+    var serviceFramework = settings.servicesFramework;
+    var baseServicePath = serviceFramework.getServiceRoot('SlidePresentation') + 'SlidePresentation.ashx/';
+
+    function Slide(s) {
+        this.SlideId = s.SlideId;
+        this.Body = s.Body;
+        //this.XVal = s.SlideId * Math.random()*100;
+        //this.YVal = s.SlideId * Math.random()*100;
+    }
+
+    var viewModel = {
+        slides: ko.observableArray([])
+    };
 
 
-<div id="simple">
-<!-- ko foreach: slides -->
-<div class="step" data-bind="attr:{'data-x':XVal, 'data-y':YVal}">
-<div data-bind="html:Body">
-</div>
-</div>
-<!-- /ko -->
-</div>
+    //get slides on initialization
+    this.init = function(element) {
 
-<script type="text/javascript">
-function Slide(s) {
-this.SlideId = s.SlideId;
-this.Body = s.Body;
-this.XVal = s.SlideId * Math.random()*100;
-this.YVal = s.SlideId * Math.random()*100;
+        var sf = $.ServicesFramework(moduleId);
+        var data = {};// serviceFramework.getAntiForgeryProperty(moduleId);
+        sf.getAntiForgeryProperty();
+        data.moduleId = moduleId;
+        data.tabId = tabId;
+        serviceFramework.getAntiForgeryProperty();
+        $.ajax({
+            type: "POST",
+            cache: false,
+            url: baseServicePath + 'GetSlides',
+            data: data
+        }).done(function(data) {
+            viewModel.slides = ko.utils.arrayMap(data, function(slide) {
+                return new Slide(slide);
+            });
+            ko.applyBindings(viewModel);
+
+            $('#SlidePresentation').jmpress();
+            
+        }).fail(function () {
+            Console.Log('Sorry failed to load Slides');
+        });
+    };
+        
 }
-
-var viewModel = {
-slides: ko.observableArray([])
-};
-
-$(function () {
-var sf = $.ServicesFramework(<%=ModuleId%>);
-sf.getAntiForgeryProperty();
-var data = {};
-data.moduleId = <%=ModuleId%>;
-data.tabId = <%=TabId%>;
-data.sortAsc = true;
-$.ajax({
-type: "POST",
-cache: false,
-url: '/desktopmodules/SlidePresentation/API/SlidePresentation.ashx/GetSlides',
-data: data
-}).done(function (data) {
-viewModel.slides = ko.utils.arrayMap(data, function (slide) {
-return new Slide(slide);
-});
-ko.applyBindings(viewModel);
-}).fail(function () {
-Console.Log('Sorry failed to load Slides');
-});
-});
-
-// delay 
-function checkModel() {
-if (viewModel.slides.length > 0) {
-$('#simple').jmpress();
-}
-else {
-checkModel();
-}
-}
-setTimeout("checkModel()", 500);
-</script>
