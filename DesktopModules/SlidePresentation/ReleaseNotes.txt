@@ -1,0 +1,23 @@
+﻿<h3>SlidePresentation</h3>
+<p class="Contributor">
+	Christoc.com <br />
+	<a href="mailto:presentations@christoc.com">presentations@christoc.com</a><br />
+	<a href=http://www.christoc.com>http://www.christoc.com</a><br />
+</p>
+<hr/>
+<div class="License">
+	<h3>About the SlidePresentation</h3>
+	<p class="Owner">
+		<b>Version 00.00.01</b><br /><br />
+	</p>
+	<p>Initial Installation.</p>
+	
+	<h4>Bug Fixes</h4>
+	<ul>
+			<li>List</li>
+			<li>of</li>
+			<li>bug</li>
+			<li>fixes</li>
+	</ul>
+	
+</div>
