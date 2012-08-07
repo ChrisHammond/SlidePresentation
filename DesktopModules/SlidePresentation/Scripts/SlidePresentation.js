@@ -1,5 +1,4 @@
-﻿
-function SlidePresentation($, ko, settings) {
+﻿function SlidePresentation($, ko, settings) {
     var moduleId = settings.moduleId;
     var tabId = settings.tabId;
     var serviceFramework = settings.servicesFramework;
@@ -16,9 +15,6 @@ function SlidePresentation($, ko, settings) {
         slides: ko.observableArray([])
     };
 
-    //= '/desktopmodules/SlidePresentation/API/SlidePresentation.ashx/GetSlides',
-    //= serviceFramework.getServiceRoot('MemberDirectory') + 'MemberDirectory.ashx/';
-
     var DEFAULT_SETTINGS = {
         //No settings currently defined
         //sortOrder:0
@@ -29,57 +25,42 @@ function SlidePresentation($, ko, settings) {
         slideSaveButton:"dnnPrimaryFormAction"
     };
 
-    //TODO: get slides
-
+    //get slides on initialization
     this.init = function(element) {
 
         var sf = $.ServicesFramework(moduleId);
-        var passedData = [];// serviceFramework.getAntiForgeryProperty(moduleId);
+        var data = {};// serviceFramework.getAntiForgeryProperty(moduleId);
         sf.getAntiForgeryProperty();
-        passedData.moduleId = moduleId;
-        passedData.tabId = tabId;
+        data.moduleId = moduleId;
+        data.tabId = tabId;
         serviceFramework.getAntiForgeryProperty();
         $.ajax({
             type: "POST",
             cache: false,
             url: baseServicePath + 'GetSlides',
-            data: passedData
+            data: data
         }).done(function(data) {
             viewModel.slides = ko.utils.arrayMap(data, function(slide) {
                 return new Slide(slide);
             });
             ko.applyBindings(viewModel);
-            $('#simple').jmpress();
-            alert('test');
+
+            $('#SlidePresentation').jmpress();
+            
         }).fail(function () {
-            alert('fail');
             Console.Log('Sorry failed to load Slides');
         });
     };
 
-    //TODO: add slide
+    //TODO: build out add slide JS
         
     function AddSlide(slide) {
             
     }
         
 
-    //TODO: delete slide
+    //TODO: build out the delete slide JS
         
-    //TODO: edit slide
+    //TODO: build out the edit slide JS
         
-
-    
-
-    //// delay 
-    //function checkModel() {
-    //    if (viewModel.slides.length > 0) {
-    //        $('#simple').jmpress();
-    //    }
-    //    else {
-    //        checkModel();
-    //    }
-    //}
-    //setTimeout("checkModel()", 500);
-
 }
