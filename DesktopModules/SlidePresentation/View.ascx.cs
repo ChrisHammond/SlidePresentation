@@ -52,8 +52,6 @@ namespace Christoc.Com.Modules.SlidePresentation
             Load += Page_Load;
             RegisterJavaScript();
             ClientResourceManager.RegisterScript(Parent.Page, "/desktopmodules/SlidePresentation/Scripts/SlidePresentation.js");
-
-
         }
 
 

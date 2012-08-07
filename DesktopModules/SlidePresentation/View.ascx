@@ -19,6 +19,4 @@
         });
         md.init('#SlidePresentation');
     });
-
-
 </script>
