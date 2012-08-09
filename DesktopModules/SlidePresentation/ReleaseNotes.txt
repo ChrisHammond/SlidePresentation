@@ -1,8 +1,8 @@
 ﻿<h3>SlidePresentation</h3>
 <p class="Contributor">
 	Christoc.com <br />
-	<a href="mailto:presentations@christoc.com">presentations@christoc.com</a><br />
-	<a href=http://www.christoc.com>http://www.christoc.com</a><br />
+	<a href="mailto:modules@christoc.com">modules@christoc.com</a><br />
+	<a href="http://www.christoc.com">http://www.christoc.com</a><br />
 </p>
 <hr/>
 <div class="License">
@@ -10,14 +10,21 @@
 	<p class="Owner">
 		<b>Version 00.00.01</b><br /><br />
 	</p>
-	<p>Initial Installation.</p>
+	<p>This module is used to create a slide deck/presentation using DotNetNuke, Knockout.js and the jmpress.js jquery port of impressjs. You can see it in action in this <a href="http://www.youtube.com/watch?v=hBqn5TsLUxA" target="_blank">youtube video</a>. This first release allows you to create slides, but there isn't an easy way to edit slides, and there is no way to reorganize slides.</p>
 	
-	<h4>Bug Fixes</h4>
+	<h4>Features</h4>
 	<ul>
-			<li>List</li>
-			<li>of</li>
-			<li>bug</li>
-			<li>fixes</li>
+			<li>Ability to create Slides</li>
+			<li>Uses JMPRESS.JS for presentation</li>
+			<li>Uses CONTENT ITEMS for data storage/retrieval</li>
+	</ul>
+
+	<h4>Known issues</h4>
+	<ul>
+			<li>Only way to edit a slide is to modify query strings, required knowledge of the ContentItemId from DB</li>
+			<li>Currently only implements knockout.js for loading the VIEW</li>
+			<li>Requires some specific CSS for positioning, you may have to adjust your skin.</li>
 	</ul>
 	
+		
 </div>

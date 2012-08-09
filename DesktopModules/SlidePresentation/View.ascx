@@ -8,7 +8,6 @@
     <!-- /ko -->
 </div>
 
-
 <script language="javascript" type="text/javascript">
     jQuery(document).ready(function ($) {
         var md = new SlidePresentation($, ko, {

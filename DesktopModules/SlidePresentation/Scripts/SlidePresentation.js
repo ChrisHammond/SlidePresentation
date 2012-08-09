@@ -4,7 +4,7 @@
     var serviceFramework = settings.servicesFramework;
     var baseServicePath = serviceFramework.getServiceRoot('SlidePresentation') + 'SlidePresentation.ashx/';
 
-    function Slide(s) {
+    function slide(s) {
         this.SlideId = s.SlideId;
         this.Body = s.Body;
         this.XVal = s.SlideId * Math.random()*100;
@@ -28,9 +28,7 @@
     //get slides on initialization
     this.init = function(element) {
 
-        var sf = $.ServicesFramework(moduleId);
         var data = {};// serviceFramework.getAntiForgeryProperty(moduleId);
-        sf.getAntiForgeryProperty();
         data.moduleId = moduleId;
         data.tabId = tabId;
         serviceFramework.getAntiForgeryProperty();
@@ -40,27 +38,21 @@
             url: baseServicePath + 'GetSlides',
             data: data
         }).done(function(data) {
-            viewModel.slides = ko.utils.arrayMap(data, function(slide) {
-                return new Slide(slide);
+            viewModel.slides = ko.utils.arrayMap(data, function(s) {
+                return new slide(s);
             });
             ko.applyBindings(viewModel);
-
-            $('#SlidePresentation').jmpress();
-            
+            $(element).jmpress();
         }).fail(function () {
             Console.Log('Sorry failed to load Slides');
         });
     };
 
-    //TODO: build out add slide JS
-        
+    //TODO: build out add slide JS       
     function AddSlide(slide) {
             
     }
-        
 
     //TODO: build out the delete slide JS
-        
-    //TODO: build out the edit slide JS
-        
+    //TODO: build out the edit slide JS        
 }

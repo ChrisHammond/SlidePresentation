@@ -2,7 +2,7 @@
 <%@ Register TagName="label" TagPrefix="dnn" Src="~/controls/labelcontrol.ascx" %>
 
 
-<div class="dnnForm stlPresentation dnnClear" id="stlPresentation">
+<div class="dnnForm SlidePresentationDiv dnnClear" id="SlidePresentationDiv">
 
 	<h2 id="dnnSitePanel-BasicSettings" class="dnnFormSectionHead"><a href="" class="dnnSectionExpanded"><%=LocalizeString("SlideCreation")%></a></h2>
 	<fieldset>
@@ -11,23 +11,22 @@
  
             <asp:TextBox ID="txtSlideBody" runat="server" TextMode="MultiLine" Columns="50" Rows="15" />
         </div>
-
     </fieldset>
 
 <asp:LinkButton runat="server" ID="lbSubmit" resourcekey="lbSubmit" CssClass="dnnPrimaryFormAction" OnClick="lbSubmit_Click"></asp:LinkButton>
 
-
+</div>
 <script language="javascript" type="text/javascript">
     /*globals jQuery, window, Sys */
     (function ($, Sys) {
-        function stlPresentation() {
-            $('#stlPresentation').dnnPanels();
+        function SlidePresentationDiv() {
+            $('#SlidePresentationDiv').dnnPanels();
         }
 
         $(document).ready(function () {
-            stlPresentation();
+            SlidePresentationDiv();
             Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
-                stlPresentation();
+                SlidePresentationDiv();
             });
         });
 
