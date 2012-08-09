@@ -1,6 +1,6 @@
 <dotnetnuke type="Package" version="5.0">
   <packages>
-    <package name="Christoc.Com.Modules.SlidePresentation" type="Module" version="00.00.04">
+    <package name="Christoc.Com.Modules.SlidePresentation" type="Module" version="00.00.01">
       <friendlyName>SlidePresentation</friendlyName>
       <description>christoc.com SlidePresentation module</description>
       <iconFile>Images/icon_extensions.gif</iconFile>
@@ -8,7 +8,7 @@
         <name>christoc.com</name>
         <organization>christoc.com</organization>
         <url>http://www.christoc.com</url>
-        <email>training@christoc.com</email>
+        <email>modules@christoc.com</email>
       </owner>
       <license src="License.txt"></license>
       <releaseNotes src="ReleaseNotes.txt"></releaseNotes>
