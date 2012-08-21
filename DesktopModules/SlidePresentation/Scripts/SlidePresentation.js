@@ -36,7 +36,9 @@
             type: "POST",
             cache: false,
             url: baseServicePath + 'GetSlides',
-            data: data
+            data: JSON.stringify(data),
+            dataType:"json",
+            beforeSend: serviceFramework.setModuleHeaders
         }).done(function(data) {
             viewModel.slides = ko.utils.arrayMap(data, function(s) {
                 return new slide(s);
