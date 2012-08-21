@@ -13,7 +13,7 @@
       <license src="License.txt"></license>
       <releaseNotes src="ReleaseNotes.txt"></releaseNotes>
       <dependencies>
-        <dependency type="CoreVersion">06.02.02</dependency>
+        <dependency type="CoreVersion">06.02.01</dependency>
       </dependencies>
 
       <components>
