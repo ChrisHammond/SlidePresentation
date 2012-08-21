@@ -25,34 +25,38 @@ namespace Christoc.Com.Modules.SlidePresentation.services
         }
 
         //below code is not currently in use and doesn't yet work
-        //[SupportedModules("SlidePresentation")]
-        //[DnnModuleAuthorize(AccessLevel = SecurityAccessLevel.View)]
-        //public ActionResult SaveSlide(int tabId, int moduleId, string slideContent, int slideOrder, int slideId)
-        //{
-        //    try
-        //    {
-        //        //TODO: create a new slide
-
-        //        //save the slide
-        //        var newSlide = new Slide();
-        //        newSlide.Body = slideContent;
-        //        newSlide.CreatedByUserId = newSlide.LastModifiedByUserId = UserInfo.UserID;
-        //        newSlide.CreatedOnDate = DateTime.Now;
-        //        newSlide.ModuleId = moduleId;
-
-        //        if (slideId>0)
-        //        {
-        //            newSlide.ContentItemId = Convert.ToInt32(slideId);
-        //        }
-        //        newSlide.Save(tabId);
-        //        //TODO: return something if the slide is created
-        //        return null;
-        //    }
-        //    catch (Exception exc)
-        //    {
-        //        DnnLog.Error(exc);
-        //        return Json(null, JsonRequestBehavior.AllowGet);
-        //    }
-        //}
+        [SupportedModules("SlidePresentation")]
+        [DnnModuleAuthorize(AccessLevel = SecurityAccessLevel.Edit)]
+        public ActionResult SaveSlide(int tabId, int moduleId, string slideContent, int slideOrder, int slideId)
+        {
+            //not currently using slide order
+            try
+            {
+                //TODO: create a new slide
+                //if slideid is passed in we should get the original slide
+                var saveSlide = new Slide();
+                if (slideId > 0)
+                {
+                    saveSlide = Slide.SlideLoad(slideId);
+                }
+                else
+                {
+                    saveSlide.CreatedByUserId = UserInfo.UserID;
+                    saveSlide.CreatedOnDate = DateTime.UtcNow;
+                    saveSlide.ModuleId = moduleId;
+                }
+                saveSlide.LastModifiedByUserId = UserInfo.UserID;
+                saveSlide.LastModifiedOnDate = DateTime.UtcNow;
+                saveSlide.Body = slideContent;
+                saveSlide.Save(tabId);
+                //TODO: return something if the slide is created
+                return null;
+            }
+            catch (Exception exc)
+            {
+                DnnLog.Error(exc);
+                return Json(null, JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }
