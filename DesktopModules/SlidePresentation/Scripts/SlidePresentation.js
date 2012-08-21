@@ -53,6 +53,10 @@
             
     }
 
+    //todo: show the slide creation/edit interface
+
+
+
     //TODO: build out the delete slide JS
     //TODO: build out the edit slide JS        
 }
