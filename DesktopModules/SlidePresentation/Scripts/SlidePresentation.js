@@ -27,17 +27,16 @@
 
     //get slides on initialization
     this.init = function(element) {
-
-        var data = {};// serviceFramework.getAntiForgeryProperty(moduleId);
-        data.moduleId = moduleId;
-        data.tabId = tabId;
-        serviceFramework.getAntiForgeryProperty();
+        //var data = {}; //removed because we don't need this
+        //data.moduleId = moduleId; //removed because we don't need this when calling setModuleHeaders
+        //data.tabId = tabId; //removed because we don't need this
+        //serviceFramework.getAntiForgeryProperty(); //removed because we don't need this
         $.ajax({
             type: "POST",
             cache: false,
-            url: baseServicePath + 'GetSlides',
-            data: JSON.stringify(data),
-            dataType:"json",
+            url: baseServicePath + 'ListOfSlides',
+            //data: data,
+            //dataType:"json",
             beforeSend: serviceFramework.setModuleHeaders
         }).done(function(data) {
             viewModel.slides = ko.utils.arrayMap(data, function(s) {
