@@ -10,14 +10,12 @@ namespace Christoc.Com.Modules.SlidePresentation.services
     public class SlidePresentationController:DnnController
     {
 
-        //TODO: Currently looking at different ways to pass info into a webservice, nothing is working
-
         [DnnAuthorize(AllowAnonymous = true)]
-        public ActionResult GetSlides(int ModuleId, int TabId)
+        public ActionResult ListOfSlides()
         {
             try
             {   
-                var slides = Slide.GetSlides(TabId, ModuleId);
+                var slides = Slide.GetSlides(ActiveModule.TabID, ActiveModule.ModuleID);
                 return Json(slides, JsonRequestBehavior.AllowGet);
             }
             catch (Exception exc)
